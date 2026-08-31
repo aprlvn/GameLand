@@ -83,10 +83,14 @@ function buildWordlePreview(cover, game) {
   cover.appendChild(row);
 
   const tap = document.createElement("span");
-  tap.className = "tap-cursor tap-cursor-wordle";
+  tap.className = "tap-cursor tap-cursor-row";
   tap.textContent = "👆";
   row.appendChild(tap);
 
+  runTileCycle(tiles, tap);
+}
+
+function runTileCycle(tiles, tap) {
   const FLIP_GAP = 220;
   const HOLD = 1400;
   const RESET_PAUSE = 500;
@@ -108,6 +112,160 @@ function buildWordlePreview(cover, game) {
   setTimeout(runCycle, 400);
 }
 
+function buildTangoPreview(cover, game) {
+  cover.classList.add("preview-tango");
+  const symbols = ["💗", "⭐", "💗", "⭐"];
+
+  const row = document.createElement("div");
+  row.className = "tango-row";
+  const tiles = symbols.map((sym) => {
+    const tile = document.createElement("div");
+    tile.className = "tango-tile";
+    tile.textContent = sym;
+    row.appendChild(tile);
+    return tile;
+  });
+  cover.appendChild(row);
+
+  const tap = document.createElement("span");
+  tap.className = "tap-cursor tap-cursor-row";
+  tap.textContent = "👆";
+  row.appendChild(tap);
+
+  runTileCycle(tiles, tap);
+}
+
+function buildQueensPreview(cover, game) {
+  cover.classList.add("preview-queens");
+  const colors = ["#ffd6e8", "#e4d4ff", "#ffdcc2", "#cfd8ff"];
+  const regions = [
+    [0, 0, 1, 1],
+    [0, 0, 1, 1],
+    [2, 2, 3, 3],
+    [2, 2, 3, 3],
+  ];
+  const crownSpots = [
+    [0, 1],
+    [1, 3],
+    [3, 0],
+  ];
+
+  const gridEl = document.createElement("div");
+  gridEl.className = "queens-grid";
+  const cellEls = [];
+  for (let r = 0; r < 4; r++) {
+    for (let c = 0; c < 4; c++) {
+      const cell = document.createElement("div");
+      cell.className = "queens-cell";
+      cell.style.background = colors[regions[r][c]];
+      cell.innerHTML = `<span class="crown">👑</span>`;
+      gridEl.appendChild(cell);
+      cellEls.push(cell);
+    }
+  }
+  cover.appendChild(gridEl);
+
+  const tap = document.createElement("span");
+  tap.className = "tap-cursor";
+  tap.textContent = "👆";
+  tap.style.top = "-20px";
+  tap.style.left = "0px";
+  tap.style.opacity = "0";
+  tap.style.transition = "left 0.2s ease, top 0.2s ease, opacity 0.2s ease";
+  gridEl.style.position = "relative";
+  gridEl.appendChild(tap);
+
+  const STEP = 650;
+  const HOLD = 1200;
+  const RESET_PAUSE = 500;
+
+  function runCycle() {
+    crownSpots.forEach(([r, c], i) => {
+      setTimeout(() => {
+        cellEls[r * 4 + c].classList.add("placed");
+        tap.style.left = `${c * 22}px`;
+        tap.style.top = `${r * 22 - 20}px`;
+        tap.style.opacity = "1";
+      }, i * STEP);
+    });
+    const total = crownSpots.length * STEP + HOLD;
+    setTimeout(() => {
+      cellEls.forEach((cell) => cell.classList.remove("placed"));
+      tap.style.opacity = "0";
+    }, total);
+    setTimeout(runCycle, total + RESET_PAUSE);
+  }
+
+  setTimeout(runCycle, 400);
+}
+
+function buildMinesweeperPreview(cover, game) {
+  cover.classList.add("preview-minesweeper");
+  const order = [
+    [2, 2], [2, 1], [2, 3], [1, 2], [3, 2],
+    [1, 1], [1, 3], [3, 1], [3, 3], [0, 2],
+  ];
+  const numbers = { "1,1": 1, "1,3": 2, "3,1": 1, "3,3": 3 };
+  const pawSpot = "0,2";
+
+  const gridEl = document.createElement("div");
+  gridEl.className = "mine-grid";
+  const cellEls = {};
+  for (let r = 0; r < 5; r++) {
+    for (let c = 0; c < 5; c++) {
+      const cell = document.createElement("div");
+      cell.className = "mine-cell";
+      gridEl.appendChild(cell);
+      cellEls[`${r},${c}`] = cell;
+    }
+  }
+  cover.appendChild(gridEl);
+
+  const tap = document.createElement("span");
+  tap.className = "tap-cursor";
+  tap.textContent = "👆";
+  tap.style.top = "-20px";
+  tap.style.left = "0px";
+  tap.style.opacity = "0";
+  tap.style.transition = "left 0.2s ease, top 0.2s ease, opacity 0.2s ease";
+  gridEl.style.position = "relative";
+  gridEl.appendChild(tap);
+
+  const STEP = 160;
+  const HOLD = 1500;
+  const RESET_PAUSE = 500;
+
+  function runCycle() {
+    order.forEach(([r, c], i) => {
+      setTimeout(() => {
+        const key = `${r},${c}`;
+        const cell = cellEls[key];
+        cell.classList.add("revealed");
+        if (key === pawSpot) {
+          cell.innerHTML = `<svg class="mini-paw" viewBox="0 0 24 24"><ellipse cx="12" cy="16.5" rx="6" ry="5" fill="#f2994a"/><circle cx="5.8" cy="8.2" r="2.6" fill="#f2994a"/><circle cx="11" cy="5.2" r="2.6" fill="#f2994a"/><circle cx="16.6" cy="6.4" r="2.6" fill="#f2994a"/></svg>`;
+        } else if (numbers[key]) {
+          cell.classList.add(`n${numbers[key]}`);
+          cell.textContent = numbers[key];
+        }
+        tap.style.left = `${c * 24}px`;
+        tap.style.top = `${r * 24 - 20}px`;
+        tap.style.opacity = "1";
+      }, i * STEP);
+    });
+    const total = order.length * STEP + HOLD;
+    setTimeout(() => {
+      Object.values(cellEls).forEach((cell) => {
+        cell.className = "mine-cell";
+        cell.innerHTML = "";
+      });
+      tap.style.opacity = "0";
+    }, total);
+    setTimeout(runCycle, total + RESET_PAUSE);
+  }
+
+  setTimeout(runCycle, 400);
+}
+
 function createCard(game) {
   const card = document.createElement("a");
   card.className = "card";
@@ -121,6 +279,12 @@ function createCard(game) {
     buildBirdPreview(cover, game);
   } else if (game.preview === "wordle") {
     buildWordlePreview(cover, game);
+  } else if (game.preview === "tango") {
+    buildTangoPreview(cover, game);
+  } else if (game.preview === "queens") {
+    buildQueensPreview(cover, game);
+  } else if (game.preview === "minesweeper") {
+    buildMinesweeperPreview(cover, game);
   } else if (game.background) {
     cover.style.backgroundImage = `url("${game.background}")`;
   }

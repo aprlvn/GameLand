@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Queens — A Pink Crown Puzzle</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <header class="header">
+    <div class="header-left">
+      <button id="help-btn" class="icon-btn" title="How to play" aria-label="How to play">?</button>
+    </div>
+    <div class="title-wrap">
+      <h1 class="title">Queens</h1>
+      <p class="subtitle">One crown per color, none too close</p>
+    </div>
+    <div class="header-actions">
+      <button id="new-game-btn" class="icon-btn" title="New puzzle" aria-label="New puzzle">⟳</button>
+    </div>
+  </header>
+
+  <div class="control-bar">
+    <div class="difficulty-group" id="difficulty-group">
+      <button class="diff-btn active" data-level="easy">Easy</button>
+      <button class="diff-btn" data-level="medium">Medium</button>
+      <button class="diff-btn" data-level="hard">Hard</button>
+    </div>
+    <div class="timer-badge" aria-label="Elapsed time">
+      <span class="timer-icon">⏱️</span>
+      <span id="timer" class="timer-value">00:00</span>
+    </div>
+  </div>
+
+  <main class="game">
+    <div class="board-wrap">
+      <div id="board" class="board" aria-label="Game board"></div>
+    </div>
+    <p class="hint-line">Tap: empty → × mark → 👑 → empty</p>
+
+    <div class="howto">
+      <h3>How to play</h3>
+      <ul>
+        <li>Place exactly one crown 👑 in every row, every column, and every color region.</li>
+        <li>No two crowns may touch, not even diagonally.</li>
+        <li>Tap once for a small × note (handy for tracking eliminations), again for a crown, and once more to clear it.</li>
+      </ul>
+    </div>
+  </main>
+
+  <div id="help-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="close-help" aria-label="Close">&times;</button>
+      <h2>How to Play</h2>
+      <p>Place one crown 👑 in every row, column, and color region so that:</p>
+      <ul class="rules-list">
+        <li>Exactly <strong>one crown</strong> per row, per column, and per colored region.</li>
+        <li>No two crowns touch, not even <strong>diagonally</strong>.</li>
+      </ul>
+      <p class="example-caption">Tap a tile once for a small × note (handy for tracking eliminations), tap again for a crown, and once more to clear it.</p>
+    </div>
+  </div>
+
+  <div id="end-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="close-end" aria-label="Close">&times;</button>
+      <h2 id="end-title">All crowned!</h2>
+      <p id="end-message"></p>
+      <button id="play-again-btn" class="primary-btn">Play Again</button>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>

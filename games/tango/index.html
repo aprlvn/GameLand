@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Tango — A Pink Heart &amp; Star Puzzle</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <header class="header">
+    <div class="header-left">
+      <button id="help-btn" class="icon-btn" title="How to play" aria-label="How to play">?</button>
+    </div>
+    <div class="title-wrap">
+      <h1 class="title">Tango</h1>
+      <p class="subtitle">Balance the grid, hearts and stars</p>
+    </div>
+    <div class="header-actions">
+      <button id="new-game-btn" class="icon-btn" title="New puzzle" aria-label="New puzzle">⟳</button>
+    </div>
+  </header>
+
+  <div class="control-bar">
+    <div class="difficulty-group" id="difficulty-group">
+      <button class="diff-btn active" data-level="easy">Easy</button>
+      <button class="diff-btn" data-level="medium">Medium</button>
+      <button class="diff-btn" data-level="hard">Hard</button>
+    </div>
+    <div class="timer-badge" aria-label="Elapsed time">
+      <span class="timer-icon">⏱️</span>
+      <span id="timer" class="timer-value">00:00</span>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <main class="game">
+    <div class="board-wrap">
+      <div id="board" class="board" aria-label="Game board"></div>
+    </div>
+    <div class="action-row">
+      <button id="check-btn" class="primary-btn">Check</button>
+    </div>
+    <p class="hint-line">Tap a tile to cycle 💗 → ⭐ → empty</p>
+
+    <div class="howto">
+      <h3>How to play</h3>
+      <ul>
+        <li>Fill every tile with a heart 💗 or a star ⭐.</li>
+        <li>No more than two of the same symbol may touch in a row, in any direction.</li>
+        <li>Each row and column needs an equal number of hearts and stars.</li>
+        <li>A <strong>=</strong> between two tiles means they must match; a <strong>×</strong> means they must differ.</li>
+        <li>Nothing is marked right or wrong until you press Check or fill the whole board.</li>
+      </ul>
+    </div>
+  </main>
+
+  <div id="help-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="close-help" aria-label="Close">&times;</button>
+      <h2>How to Play</h2>
+      <p>Fill every tile with a heart 💗 or a star ⭐ so that:</p>
+      <ul class="rules-list">
+        <li>No more than <strong>two</strong> of the same symbol touch in a row, in any direction.</li>
+        <li>Each row and column ends up with an equal number of hearts and stars.</li>
+        <li>A <strong>=</strong> badge between two tiles means they must match. A <strong>×</strong> badge means they must differ.</li>
+      </ul>
+      <p class="example-caption">Nothing is marked right or wrong until you press Check or fill the whole board.</p>
+    </div>
+  </div>
+
+  <div id="end-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="close-end" aria-label="Close">&times;</button>
+      <h2 id="end-title">You balanced it!</h2>
+      <p id="end-message"></p>
+      <button id="play-again-btn" class="primary-btn">Play Again</button>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>

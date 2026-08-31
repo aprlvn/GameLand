@@ -266,7 +266,8 @@ body {
   color: #c23b83;
 }
 
-.wordle-tile.flip {
+.wordle-tile.flip,
+.tango-tile.flip {
   animation: tile-flip 0.5s ease forwards;
 }
 
@@ -286,15 +287,15 @@ body {
     transform: rotateX(90deg);
   }
   51% {
-    background: #ec4899;
+    background: var(--accent);
     color: #fff;
-    border-color: #ec4899;
+    border-color: var(--accent);
   }
   100% {
     transform: rotateX(0deg);
-    background: #ec4899;
+    background: var(--accent);
     color: #fff;
-    border-color: #ec4899;
+    border-color: var(--accent);
   }
 }
 
@@ -333,7 +334,7 @@ body {
   }
 }
 
-.tap-cursor-wordle {
+.tap-cursor-row {
   top: -22px;
   left: calc(var(--tap-index, 0) * 34px);
   font-size: 1rem;
@@ -350,6 +351,114 @@ body {
   50% {
     transform: translateY(4px);
   }
+}
+
+/* ---- Tango live preview ---- */
+
+.preview-tango {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #efe6ff, #f7f1ff 60%, #fff);
+}
+
+.tango-row {
+  position: relative;
+  display: flex;
+  gap: 6px;
+}
+
+.tango-tile {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  border: 2px solid #ddc9ff;
+  border-radius: 6px;
+  background: #fff;
+}
+
+/* ---- Queens live preview ---- */
+
+.preview-queens {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffe3ee, #fff7f0 60%, #fff);
+}
+
+.queens-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 20px);
+  grid-template-rows: repeat(4, 20px);
+  gap: 2px;
+}
+
+.queens-cell {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.queens-cell .crown {
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.queens-cell.placed .crown {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- Minesweeper live preview ---- */
+
+.preview-minesweeper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffe9d6, #fff4ea 60%, #fff);
+}
+
+.mine-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 22px);
+  grid-template-rows: repeat(5, 22px);
+  gap: 2px;
+}
+
+.mine-cell {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: linear-gradient(145deg, #ffe0c2, #ffd0a3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.mine-cell.revealed {
+  background: #fff8f0;
+}
+
+.mine-cell.n1 { color: #6fa8ff; }
+.mine-cell.n2 { color: #4fbf8a; }
+.mine-cell.n3 { color: #ff6f8f; }
+
+.mine-cell .mini-paw {
+  width: 70%;
+  height: 70%;
 }
 
 @keyframes sparkle-bob {
