@@ -1,0 +1,446 @@
+:root {
+  --bg: #ffe3f0;
+  --text: #4a2a3d;
+  --text-muted: #9a6f89;
+  --card-bg: #ffffff;
+  --card-border: rgba(214, 51, 132, 0.12);
+  --shadow: 0 10px 30px rgba(214, 51, 132, 0.14);
+  --shadow-hover: 0 18px 42px rgba(214, 51, 132, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #221420;
+    --text: #ffe3f1;
+    --text-muted: #cf9dbb;
+    --card-bg: #331e30;
+    --card-border: rgba(255, 179, 219, 0.15);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 18px 42px rgba(0, 0, 0, 0.55);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Fredoka", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  position: relative;
+}
+
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.blob-1 {
+  width: 420px;
+  height: 420px;
+  top: -160px;
+  left: -140px;
+  background: #ff2f92;
+}
+
+.blob-2 {
+  width: 380px;
+  height: 380px;
+  bottom: -140px;
+  right: -120px;
+  background: #c084fc;
+}
+
+.blob-3 {
+  width: 320px;
+  height: 320px;
+  top: 42%;
+  left: 58%;
+  background: #ffd166;
+  opacity: 0.25;
+}
+
+.header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 4rem 1.5rem 2.5rem;
+}
+
+.site-title {
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ff2f92, #ff6fb8 45%, #b46bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.site-title::before,
+.site-title::after {
+  content: "✨";
+  font-size: 0.5em;
+  -webkit-text-fill-color: initial;
+  display: inline-block;
+  margin: 0 0.2em;
+  animation: sparkle-bob 2.4s ease-in-out infinite;
+}
+
+.site-title::after {
+  animation-delay: 1.1s;
+}
+
+.site-subtitle {
+  margin: 0.5rem 0 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+
+.card {
+  display: block;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-hover);
+}
+
+.card-cover {
+  position: relative;
+  height: 150px;
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--accent) 18%, var(--card-bg));
+}
+
+.card-icon {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: var(--card-bg);
+  padding: 5px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+/* ---- Pretty Bird live preview ---- */
+
+.preview-bird {
+  background: linear-gradient(180deg, #bdeeff 0%, #eafcff 55%, #d9f7e3 100%);
+}
+
+.bird-pipe-set {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 26px;
+  animation: pipe-cross 3.4s linear infinite;
+}
+
+.bird-pipe-set:nth-child(2) {
+  animation-delay: -1.7s;
+}
+
+.bird-pipe {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.bird-pipe img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.bird-pipe-top {
+  top: 0;
+  height: 45px;
+}
+
+/* Real game hangs this cat upside-down, face toward the gap below. */
+.bird-pipe-top img {
+  transform: scaleY(-1);
+}
+
+.bird-pipe-bottom {
+  bottom: 0;
+  height: 50px;
+}
+
+.bird-sprite {
+  position: absolute;
+  left: 24%;
+  top: 45%;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.18));
+  animation: bird-bob 1.2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes pipe-cross {
+  from {
+    transform: translateX(220px);
+  }
+  to {
+    transform: translateX(-40px);
+  }
+}
+
+@keyframes bird-bob {
+  0%,
+  100% {
+    transform: translateY(-6px) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(16px) rotate(12deg);
+  }
+}
+
+/* ---- Wordle Land live preview ---- */
+
+.preview-wordle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffd6ea, #ffe9f5 60%, #fff);
+}
+
+.wordle-row {
+  position: relative;
+  display: flex;
+  gap: 6px;
+}
+
+.wordle-tile {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid #f3b8d6;
+  border-radius: 6px;
+  background: #fff;
+  color: #c23b83;
+}
+
+.wordle-tile.flip {
+  animation: tile-flip 0.5s ease forwards;
+}
+
+@keyframes tile-flip {
+  0% {
+    transform: rotateX(0deg);
+    background: #fff;
+    color: #c23b83;
+    border-color: #f3b8d6;
+  }
+  49% {
+    background: #fff;
+    color: #c23b83;
+    border-color: #f3b8d6;
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  51% {
+    background: #ec4899;
+    color: #fff;
+    border-color: #ec4899;
+  }
+  100% {
+    transform: rotateX(0deg);
+    background: #ec4899;
+    color: #fff;
+    border-color: #ec4899;
+  }
+}
+
+/* ---- Shared tap cursor (the "someone is playing" touch) ---- */
+
+.tap-cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+}
+
+.tap-cursor-bird {
+  left: 20%;
+  top: 55%;
+  font-size: 1.1rem;
+  animation: tap-bird 1.2s ease-in-out infinite;
+}
+
+@keyframes tap-bird {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.7) translateY(6px);
+  }
+  45% {
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1) translateY(-4px);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(0.85) translateY(-10px);
+  }
+}
+
+.tap-cursor-wordle {
+  top: -22px;
+  left: calc(var(--tap-index, 0) * 34px);
+  font-size: 1rem;
+  opacity: 0.9;
+  transition: left 0.2s ease;
+  animation: tap-bounce 0.5s ease-in-out infinite;
+}
+
+@keyframes tap-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes sparkle-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(12deg);
+  }
+}
+
+.card-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.card-title {
+  margin: 0 0 0.15rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.card-tagline {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.card-description {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, #ff8fc7));
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .play-btn {
+  transform: translateX(3px);
+}
+
+.card-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 2.5rem 1.5rem;
+  border: 2px dashed var(--card-border);
+  background: transparent;
+  box-shadow: none;
+}
+
+.placeholder-icon {
+  font-size: 2rem;
+}
+
+.placeholder-text {
+  margin: 0;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 1rem 1.5rem 3rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer p {
+  margin: 0.3rem 0;
+}
+
+.footer .credit {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #ff5eae;
+}

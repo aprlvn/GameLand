@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path d="M14 24
+           c0-7 5-12 12-12
+           h12
+           c7 0 12 5 12 12
+           v18
+           c0 7-4 12-9 12
+           c-3 0-5-2-7-5
+           l-2-3
+           h-2
+           l-2 3
+           c-2 3-4 5-7 5
+           c-5 0-9-5-9-12
+           z"
+        fill="#ff4fa3"/>
+
+  <!-- d-pad -->
+  <rect x="19" y="26" width="6" height="14" rx="1.5" fill="#fff"/>
+  <rect x="15" y="30" width="14" height="6" rx="1.5" fill="#fff"/>
+
+  <!-- buttons -->
+  <circle cx="44" cy="28" r="3" fill="#fff"/>
+  <circle cx="44" cy="38" r="3" fill="#fff"/>
+</svg>
