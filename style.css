@@ -553,3 +553,223 @@ body {
   font-size: 0.85rem;
   color: #ff5eae;
 }
+
+/* ---- Profile badge + switcher ---- */
+
+.profile-badge {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem 0.4rem 0.6rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.profile-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+.profile-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(74, 25, 66, 0.4);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.profile-modal.hidden {
+  display: none;
+}
+
+.profile-modal-content {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 1.75rem;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: var(--shadow-hover);
+  border: 1px solid var(--card-border);
+}
+
+.profile-modal-content h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #b3106b;
+}
+
+.profile-modal-sub {
+  margin: 0 0 1.1rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.profile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.profile-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+}
+
+.profile-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: #fff7fb;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.profile-select span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-select:hover {
+  background: #ffe9f3;
+}
+
+.profile-select.active {
+  background: linear-gradient(135deg, #e91e8c, #ff6fb0);
+  color: #fff;
+  border-color: transparent;
+}
+
+.profile-delete {
+  flex-shrink: 0;
+  width: 40px;
+  border: 1px solid rgba(214, 51, 132, 0.25);
+  border-radius: 12px;
+  background: #fff0f5;
+  color: #d6336c;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.profile-delete:hover {
+  background: #ffd7e6;
+  transform: scale(1.05);
+}
+
+.profile-delete:active {
+  transform: scale(0.94);
+}
+
+.profile-manage-btn {
+  display: block;
+  margin: 0 0 0.9rem;
+  background: none;
+  border: none;
+  color: #d6336c;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.profile-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.profile-form input {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: #fff;
+}
+
+.profile-form input:focus {
+  outline: 2px solid #ff8fc7;
+  outline-offset: 1px;
+}
+
+.profile-add-btn {
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 999px;
+  background: #e91e8c;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.profile-guest-btn {
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .profile-badge {
+    top: 0.6rem;
+    right: 0.6rem;
+    padding: 0.35rem 0.7rem 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}

@@ -22,7 +22,7 @@ const GAMES = [
     },
   },
   {
-    title: "Wordle Land",
+    title: "Wordle",
     tagline: "Guess the word, one bloom at a time",
     description: "The classic 5-letter word guessing game with a pink twist — hints, definitions, and a daily challenge.",
     path: "games/wordle-land/index.html",

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wordle Land — A Pink Word Game</title>
+<title>Wordle — A Pink Word Game</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
@@ -25,10 +25,11 @@
       </div>
     </div>
     <div class="title-wrap">
-      <h1 class="title">Wordle Land</h1>
+      <h1 class="title">Wordle</h1>
       <p class="subtitle">Guess the word, one bloom at a time 🌸</p>
     </div>
     <div class="header-actions">
+      <button id="leaderboard-btn" class="icon-btn" title="Leaderboard" aria-label="Leaderboard">🏆</button>
       <button id="sound-btn" class="icon-btn" title="Toggle sound" aria-label="Toggle sound">🔊</button>
       <button id="new-game-btn" class="icon-btn" title="New game" aria-label="New game">⟳</button>
     </div>
@@ -120,6 +121,7 @@
     </div>
   </div>
 
+  <script src="../../profiles.js"></script>
   <script src="words.js?v=6"></script>
   <script src="script.js?v=6"></script>
 </body>

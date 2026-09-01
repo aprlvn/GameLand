@@ -187,6 +187,8 @@
       return;
     }
 
+    if (window.GamelandSound) window.GamelandSound.playClick();
+
     const queue = [[r, c]];
     const seen = new Set();
     while (queue.length) {
@@ -217,6 +219,7 @@
     flagCount += state.flagged ? 1 : -1;
     mineCountEl.textContent = mineTotal - flagCount;
     renderCell(r, c);
+    if (window.GamelandSound) window.GamelandSound.playClick();
   }
 
   function checkWin() {
@@ -250,6 +253,7 @@
     gameOver = true;
     stopTimer();
     revealAllMines(r, c);
+    if (window.GamelandSound) window.GamelandSound.playLose();
     faceBtn.textContent = "😿";
     endTitle.textContent = "Oh no!";
     endMessage.textContent = "A kitty got you. Try again?";
@@ -259,6 +263,7 @@
   function winGame() {
     gameOver = true;
     stopTimer();
+    if (window.GamelandSound) window.GamelandSound.playWin();
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         if (board[r][c].mine && !board[r][c].flagged) {
@@ -273,6 +278,9 @@
     endTitle.textContent = "You win!";
     endMessage.textContent = `Cleared in ${elapsedSeconds}s.`;
     endModal.classList.remove("hidden");
+    if (window.GamelandProfiles) {
+      window.GamelandProfiles.recordScore("minesweeper", elapsedSeconds, "time", levelKey);
+    }
   }
 
   difficultyGroup.addEventListener("click", (e) => {
@@ -295,4 +303,17 @@
   playAgainBtn.addEventListener("click", () => setLevel(levelKey));
 
   setLevel("easy");
+
+  if (window.GamelandProfiles) {
+    window.GamelandProfiles.initLeaderboard({
+      gameId: "minesweeper",
+      metric: "time",
+      difficulties: [
+        { key: "easy", label: "Easy" },
+        { key: "medium", label: "Medium" },
+        { key: "hard", label: "Hard" },
+      ],
+      getCurrentDifficulty: () => levelKey,
+    });
+  }
 })();

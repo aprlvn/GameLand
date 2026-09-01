@@ -15,6 +15,11 @@
   <div class="bg-blob blob-2"></div>
   <div class="bg-blob blob-3"></div>
 
+  <button id="profile-badge" class="profile-badge" aria-label="Switch profile">
+    <span>👤</span>
+    <span id="profile-name">Guest</span>
+  </button>
+
   <header class="header">
     <h1 class="site-title">Gameland</h1>
     <p class="site-subtitle">A little collection of games, made one at a time.</p>
@@ -27,6 +32,22 @@
     <p class="credit">Created by April Georfo</p>
   </footer>
 
+  <div id="profile-modal" class="profile-modal hidden">
+    <div class="profile-modal-content">
+      <button id="profile-modal-close" class="modal-close" aria-label="Close">&times;</button>
+      <h2>Who's playing?</h2>
+      <p class="profile-modal-sub">Pick a profile or create a new one. Scores and leaderboards are saved on this device only.</p>
+      <div id="profile-list" class="profile-list"></div>
+      <button id="profile-manage-btn" type="button" class="profile-manage-btn">Manage profiles</button>
+      <form id="profile-form" class="profile-form">
+        <input id="profile-input" type="text" placeholder="Enter a name" maxlength="24" autocomplete="off">
+        <button type="submit" class="profile-add-btn">Add</button>
+      </form>
+      <button id="profile-guest-btn" class="profile-guest-btn">Continue as guest</button>
+    </div>
+  </div>
+
+<script src="profiles.js"></script>
 <script src="games.js"></script>
 <script src="script.js"></script>
 </body>

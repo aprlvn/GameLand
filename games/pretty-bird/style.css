@@ -149,7 +149,8 @@ canvas#game {
   border-radius: 999px;
 }
 
-#mute-btn {
+#mute-btn,
+#leaderboard-icon-btn {
   flex: 0 0 auto;
   width: 30px;
   height: 30px;
@@ -167,12 +168,14 @@ canvas#game {
   touch-action: manipulation;
 }
 
-#mute-btn:hover {
+#mute-btn:hover,
+#leaderboard-icon-btn:hover {
   background: rgba(255, 255, 255, 0.28);
   transform: scale(1.08);
 }
 
-#mute-btn:active {
+#mute-btn:active,
+#leaderboard-icon-btn:active {
   transform: scale(0.94);
 }
 

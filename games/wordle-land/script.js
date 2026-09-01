@@ -480,6 +480,9 @@
         endMessage.textContent = `You guessed the word in ${guesses} ${
           guesses === 1 ? "try" : "tries"
         } and ${finalTime}!`;
+        if (window.GamelandProfiles) {
+          window.GamelandProfiles.recordScore("wordle", elapsedSeconds, "time");
+        }
       } else {
         playLoseSound();
         endTitle.textContent = "So Close!";
@@ -647,4 +650,8 @@
   playAgainBtn.addEventListener("click", newGame);
 
   newGame();
+
+  if (window.GamelandProfiles) {
+    window.GamelandProfiles.initLeaderboard({ gameId: "wordle", metric: "time" });
+  }
 })();

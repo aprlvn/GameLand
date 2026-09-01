@@ -1,8 +1,8 @@
 (() => {
   const LEVELS = {
-    easy: { size: 6, given: 9, pairs: 5, cellSize: 48 },
-    medium: { size: 8, given: 13, pairs: 7, cellSize: 42 },
-    hard: { size: 10, given: 17, pairs: 9, cellSize: 36 },
+    easy: { size: 6, given: 15, pairs: 6, cellSize: 48 },
+    medium: { size: 8, given: 22, pairs: 8, cellSize: 42 },
+    hard: { size: 10, given: 28, pairs: 10, cellSize: 36 },
   };
 
   const boardEl = document.getElementById("board");
@@ -23,6 +23,7 @@
   let levelKey = "easy";
   let SIZE, HALF, CELL;
   let solution, grid, given, pairs;
+  let timerStartedAt = 0;
   let cellEls, badgeEls;
   let timerInterval = null;
   let started = false;
@@ -178,6 +179,7 @@
     clearErrors();
     grid[r][c] = grid[r][c] === null ? 0 : grid[r][c] === 0 ? 1 : null;
     renderCell(r, c);
+    if (window.GamelandSound) window.GamelandSound.playClick();
     if (!started) startTimer();
     if (isFull()) runCheck(true);
   }
@@ -272,6 +274,7 @@
     badgeEls.forEach((badge, idx) => badge.classList.toggle("error", pairErrors.has(idx)));
 
     if (cellErrors.size > 0) {
+      if (window.GamelandSound) window.GamelandSound.playError();
       showToast(full ? "So close — a few tiles need fixing" : "A couple of tiles break the rules");
       clearTimeout(clearErrorsTimeout);
       clearErrorsTimeout = setTimeout(clearErrors, 1800);
@@ -282,9 +285,9 @@
 
   function startTimer() {
     started = true;
-    const startTime = Date.now();
+    timerStartedAt = Date.now();
     timerInterval = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const elapsed = Math.floor((Date.now() - timerStartedAt) / 1000);
       const mm = String(Math.floor(elapsed / 60)).padStart(2, "0");
       const ss = String(elapsed % 60).padStart(2, "0");
       timerEl.textContent = `${mm}:${ss}`;
@@ -299,9 +302,14 @@
     solved = true;
     stopTimer();
     clearErrors();
+    if (window.GamelandSound) window.GamelandSound.playWin();
     endTitle.textContent = "You balanced it! 💗⭐";
     endMessage.textContent = `Solved in ${timerEl.textContent}.`;
     endModal.classList.remove("hidden");
+    if (window.GamelandProfiles) {
+      const elapsedSeconds = Math.floor((Date.now() - timerStartedAt) / 1000);
+      window.GamelandProfiles.recordScore("tango", elapsedSeconds, "time", levelKey);
+    }
   }
 
   function setLevel(key) {
@@ -343,4 +351,17 @@
   playAgainBtn.addEventListener("click", newGame);
 
   setLevel("easy");
+
+  if (window.GamelandProfiles) {
+    window.GamelandProfiles.initLeaderboard({
+      gameId: "tango",
+      metric: "time",
+      difficulties: [
+        { key: "easy", label: "Easy" },
+        { key: "medium", label: "Medium" },
+        { key: "hard", label: "Hard" },
+      ],
+      getCurrentDifficulty: () => levelKey,
+    });
+  }
 })();

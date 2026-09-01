@@ -487,6 +487,9 @@
       best = score;
       localStorage.setItem('prettyBirdBest', String(best));
     }
+    if (window.GamelandProfiles && score > 0) {
+      window.GamelandProfiles.recordScore('pretty-bird', score, 'score');
+    }
     title.textContent = 'Game Over';
     message.textContent = 'Tap, click, or press Space to try again';
     scoreDisplay.textContent = `Score: ${score}   Best: ${best}`;
@@ -675,6 +678,10 @@
     const muted = AudioEngine.toggleMuted();
     muteBtn.textContent = muted ? '🔇' : '🔊';
   });
+  const leaderboardIconBtn = document.getElementById('leaderboard-icon-btn');
+  if (leaderboardIconBtn) {
+    leaderboardIconBtn.addEventListener('click', (e) => e.stopPropagation());
+  }
   AudioEngine.setMusicVolumePercent(Number(musicVolumeSlider.value));
   musicVolumeSlider.addEventListener('input', (e) => {
     AudioEngine.setMusicVolumePercent(Number(e.target.value));
@@ -703,4 +710,8 @@
   title.textContent = 'Pretty Bird';
   message.textContent = 'Loading...';
   scoreDisplay.textContent = best ? `Best: ${best}` : '';
+
+  if (window.GamelandProfiles) {
+    window.GamelandProfiles.initLeaderboard({ gameId: 'pretty-bird', metric: 'score', buttonId: 'leaderboard-icon-btn' });
+  }
 })();

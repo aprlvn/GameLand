@@ -321,3 +321,105 @@ function createComingSoonCard() {
 
 GAMES.forEach((game) => grid.appendChild(createCard(game)));
 grid.appendChild(createComingSoonCard());
+
+// ---- Profile switcher ----
+(() => {
+  const badge = document.getElementById("profile-badge");
+  const nameEl = document.getElementById("profile-name");
+  const modal = document.getElementById("profile-modal");
+  const closeBtn = document.getElementById("profile-modal-close");
+  const guestBtn = document.getElementById("profile-guest-btn");
+  const listEl = document.getElementById("profile-list");
+  const manageBtn = document.getElementById("profile-manage-btn");
+  const form = document.getElementById("profile-form");
+  const input = document.getElementById("profile-input");
+
+  let manageMode = false;
+
+  function refreshBadge() {
+    const active = GamelandProfiles.getActiveProfile();
+    nameEl.textContent = active ? active.name : "Guest";
+  }
+
+  function refreshList() {
+    const profiles = GamelandProfiles.getProfiles();
+    const active = GamelandProfiles.getActiveProfile();
+
+    manageBtn.style.display = profiles.length ? "block" : "none";
+    manageBtn.textContent = manageMode ? "Done managing" : "Manage profiles";
+
+    if (!profiles.length) {
+      listEl.innerHTML = `<p style="margin:0;font-size:0.85rem;color:var(--text-muted);">No profiles yet — add one below.</p>`;
+      return;
+    }
+
+    listEl.innerHTML = "";
+    profiles.forEach((p) => {
+      const row = document.createElement("div");
+      row.className = "profile-row";
+
+      const select = document.createElement("button");
+      select.type = "button";
+      select.className = "profile-select" + (active && active.id === p.id ? " active" : "");
+      select.innerHTML = `<span>${GamelandProfiles.escapeHtml(p.name)}</span>${active && active.id === p.id ? "<span>✓</span>" : ""}`;
+      select.addEventListener("click", () => {
+        GamelandProfiles.setActiveProfile(p.id);
+        refreshBadge();
+        refreshList();
+        if (!manageMode) modal.classList.add("hidden");
+      });
+      row.appendChild(select);
+
+      if (manageMode) {
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "profile-delete";
+        del.title = `Delete ${p.name}`;
+        del.setAttribute("aria-label", `Delete ${p.name}`);
+        del.textContent = "🗑";
+        del.addEventListener("click", () => {
+          if (!confirm(`Delete the profile "${p.name}"? Their saved scores will stay on the leaderboard, just no longer tied to an editable profile.`)) return;
+          GamelandProfiles.deleteProfile(p.id);
+          refreshBadge();
+          refreshList();
+        });
+        row.appendChild(del);
+      }
+
+      listEl.appendChild(row);
+    });
+  }
+
+  function openModal() {
+    manageMode = false;
+    refreshList();
+    modal.classList.remove("hidden");
+    input.value = "";
+    input.focus();
+  }
+
+  badge.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+  guestBtn.addEventListener("click", () => modal.classList.add("hidden"));
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.add("hidden");
+  });
+
+  manageBtn.addEventListener("click", () => {
+    manageMode = !manageMode;
+    refreshList();
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const created = GamelandProfiles.createProfile(input.value);
+    if (created) {
+      refreshBadge();
+      refreshList();
+      modal.classList.add("hidden");
+    }
+  });
+
+  refreshBadge();
+  if (!GamelandProfiles.getActiveProfile()) openModal();
+})();
