@@ -266,6 +266,75 @@ function buildMinesweeperPreview(cover, game) {
   setTimeout(runCycle, 400);
 }
 
+function buildBlockBlastPreview(cover, game) {
+  cover.classList.add("preview-blockblast");
+  const COLOR_HEX = { n1: "#6fa8ff", n2: "#4fbf8a", n3: "#ff6f8f", n4: "#b47cff", n5: "#ff9a4f", n6: "#3ec4c9" };
+  const colorOrder = ["n1", "n2", "n3", "n4", "n5", "n6"];
+  const cols = 5, rows = 4;
+  // Fills row 2 across all 5 columns (plus a couple stray cells elsewhere
+  // for texture), then clears it — mirrors the real drag-and-clear loop.
+  const fillOrder = [
+    [0, 1], [1, 0], [1, 1], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [3, 3],
+  ];
+
+  const gridEl = document.createElement("div");
+  gridEl.className = "bb-grid";
+  const cellEls = {};
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const cell = document.createElement("div");
+      cell.className = "bb-cell";
+      gridEl.appendChild(cell);
+      cellEls[`${r},${c}`] = cell;
+    }
+  }
+  cover.appendChild(gridEl);
+
+  const tap = document.createElement("span");
+  tap.className = "tap-cursor";
+  tap.textContent = "👆";
+  tap.style.top = "-20px";
+  tap.style.left = "0px";
+  tap.style.opacity = "0";
+  tap.style.transition = "left 0.2s ease, top 0.2s ease, opacity 0.2s ease";
+  gridEl.style.position = "relative";
+  gridEl.appendChild(tap);
+
+  const STEP = 220;
+  const HOLD = 700;
+  const RESET_PAUSE = 500;
+
+  function runCycle() {
+    fillOrder.forEach(([r, c], i) => {
+      setTimeout(() => {
+        const cell = cellEls[`${r},${c}`];
+        cell.classList.add("filled");
+        cell.style.setProperty("--piece-color", COLOR_HEX[colorOrder[i % colorOrder.length]]);
+        tap.style.left = `${c * 22}px`;
+        tap.style.top = `${r * 22 - 20}px`;
+        tap.style.opacity = "1";
+      }, i * STEP);
+    });
+
+    const clearAt = fillOrder.length * STEP + 150;
+    setTimeout(() => {
+      for (let c = 0; c < cols; c++) cellEls[`2,${c}`].classList.add("clearing");
+      tap.style.opacity = "0";
+    }, clearAt);
+
+    const total = clearAt + 260 + HOLD;
+    setTimeout(() => {
+      Object.values(cellEls).forEach((cell) => {
+        cell.className = "bb-cell";
+        cell.style.removeProperty("--piece-color");
+      });
+    }, total);
+    setTimeout(runCycle, total + RESET_PAUSE);
+  }
+
+  setTimeout(runCycle, 400);
+}
+
 function createCard(game) {
   const card = document.createElement("a");
   card.className = "card";
@@ -285,6 +354,8 @@ function createCard(game) {
     buildQueensPreview(cover, game);
   } else if (game.preview === "minesweeper") {
     buildMinesweeperPreview(cover, game);
+  } else if (game.preview === "blockblast") {
+    buildBlockBlastPreview(cover, game);
   } else if (game.background) {
     cover.style.backgroundImage = `url("${game.background}")`;
   }

@@ -462,6 +462,51 @@ body {
   height: 70%;
 }
 
+/* ---- Block Blast live preview ---- */
+
+.preview-blockblast {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8f9ef, #fff7fb 60%, #fff);
+}
+
+.bb-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 20px);
+  grid-template-rows: repeat(4, 20px);
+  gap: 2px;
+}
+
+.bb-cell {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: #fff0f6;
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+
+.bb-cell.filled {
+  background: var(--piece-color);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.bb-cell.clearing {
+  animation: bb-clear 0.26s ease forwards;
+}
+
+@keyframes bb-clear {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
 @keyframes sparkle-bob {
   0%,
   100% {
@@ -733,7 +778,7 @@ body {
   border: 1px solid var(--card-border);
   font-family: inherit;
   font-size: 0.9rem;
-  color: var(--text);
+  color: #1a1a1a;
   background: #fff;
 }
 

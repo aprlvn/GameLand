@@ -58,4 +58,13 @@ const GAMES = [
     accent: "#f2994a",
     preview: "minesweeper",
   },
+  {
+    title: "Block Blast",
+    tagline: "Fill lines, chase your best score",
+    description: "Drag colorful blocks onto an 8×8 grid and clear full rows and columns before it fills up. Simple to start, addictive to master.",
+    path: "games/block-blast/index.html",
+    icon: "games/block-blast/favicon.svg",
+    accent: "#3a86ff",
+    preview: "blockblast",
+  },
 ];

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Block Blast — Fill &amp; Clear the Grid</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <header class="header">
+    <div class="header-left">
+      <button id="help-btn" class="icon-btn" title="How to play" aria-label="How to play">?</button>
+    </div>
+    <div class="title-wrap">
+      <h1 class="title">Block Blast</h1>
+      <p class="subtitle">Fill lines, clear the grid</p>
+    </div>
+    <div class="header-actions">
+      <button id="leaderboard-btn" class="icon-btn" title="Leaderboard" aria-label="Leaderboard">🏆</button>
+      <button id="new-game-btn" class="icon-btn" title="New board" aria-label="New board">⟳</button>
+    </div>
+  </header>
+
+  <div class="control-bar">
+    <div class="score-badge" aria-label="Score">
+      <span class="score-icon">✨</span>
+      <span id="score">0</span>
+    </div>
+    <div class="difficulty-group" id="difficulty-group">
+      <button class="diff-btn active" data-level="easy">Easy</button>
+      <button class="diff-btn" data-level="medium">Medium</button>
+      <button class="diff-btn" data-level="hard">Hard</button>
+    </div>
+    <div class="best-badge" aria-label="Best score">
+      <span class="best-icon">🏆</span>
+      <span id="best-score">0</span>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <main class="game">
+    <div class="board-wrap">
+      <div id="board" class="board" aria-label="Game board"></div>
+    </div>
+    <div id="tray" class="tray" aria-label="Available pieces"></div>
+    <p class="hint-line">Drag a piece onto the grid — fill a row or column to clear it</p>
+
+    <div class="howto">
+      <h3>How to play</h3>
+      <ul>
+        <li>Drag each of the 3 pieces below onto the grid.</li>
+        <li>Fill an entire row or column to clear it and score bonus points.</li>
+        <li>Clearing several lines with one piece scores extra.</li>
+        <li>Once all 3 pieces are placed, a fresh set appears. The game ends when none of your held pieces fit anywhere.</li>
+        <li>Easy plays on a roomier 10×10 board, Medium is the classic 8×8, and Hard shrinks it to 6×6.</li>
+      </ul>
+    </div>
+  </main>
+
+  <div id="help-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="close-help" aria-label="Close">&times;</button>
+      <h2>How to Play</h2>
+      <p>Clear as many lines as you can before the grid fills up.</p>
+      <ul class="rules-list">
+        <li>Drag a piece from the tray onto the grid. It must fit fully inside an empty area.</li>
+        <li>Complete a <strong>row or column</strong> to clear it — the fuller the clear, the bigger the bonus.</li>
+        <li>New pieces appear once all 3 in the tray are placed.</li>
+        <li>It's game over when none of your held pieces fit anywhere on the board.</li>
+        <li><strong>Easy</strong> is a roomier 10×10 board, <strong>Medium</strong> is the classic 8×8, and <strong>Hard</strong> shrinks it to 6×6.</li>
+      </ul>
+      <p class="example-caption">There's no rotating — plan around the shapes you're given!</p>
+    </div>
+  </div>
+
+  <div id="end-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="close-end" aria-label="Close">&times;</button>
+      <h2 id="end-title">Board's full!</h2>
+      <p id="end-message"></p>
+      <button id="play-again-btn" class="primary-btn">Play Again</button>
+    </div>
+  </div>
+
+<script src="../../profiles.js"></script>
+<script src="../../sounds.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -156,7 +156,7 @@
     }));
 
     list.sort((a, b) => (a.metric === "score" ? b.value - a.value : a.value - b.value));
-    return { entries: list.slice(0, limit || 20), error: false };
+    return { entries: list.slice(0, limit || 10), error: false };
   }
 
   function formatValue(value, metric) {
@@ -250,7 +250,7 @@
       listEl.innerHTML = `<p style="text-align:center;color:var(--muted,#888);font-size:0.85rem;padding:24px 0;">Loading…</p>`;
       noteEl.textContent = "";
 
-      const { entries, error } = await window.GamelandProfiles.getLeaderboard(gameId, period, 20, difficulty);
+      const { entries, error } = await window.GamelandProfiles.getLeaderboard(gameId, period, 10, difficulty);
       if (myToken !== requestToken) return; // a newer tab switch superseded this request
 
       const active = window.GamelandProfiles.getActiveProfile();
