@@ -38,6 +38,7 @@ html, body {
   height: 100%;
   min-height: 100vh;
   min-height: 100dvh;
+  touch-action: manipulation;
 }
 
 html {
@@ -77,8 +78,8 @@ body {
   height: 300px;
   bottom: -110px;
   right: -110px;
-  background: radial-gradient(circle, var(--lavender), transparent 70%);
-  opacity: 0.25;
+  background: radial-gradient(circle, #ffc94d, transparent 70%);
+  opacity: 0.28;
 }
 
 .header {

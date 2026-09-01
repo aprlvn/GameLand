@@ -32,6 +32,7 @@ body {
   color: var(--text);
   overflow-x: hidden;
   position: relative;
+  touch-action: manipulation;
 }
 
 .bg-blob {

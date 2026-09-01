@@ -70,7 +70,7 @@ canvas#game {
   font-size: 48px;
   font-weight: 700;
   color: #fff;
-  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 0 14px rgba(255, 111, 176, 0.65);
 }
 
 #overlay {
@@ -94,7 +94,7 @@ canvas#game {
 #title {
   font-size: 42px;
   margin: 0;
-  text-shadow: 3px 3px 0 #000;
+  text-shadow: 3px 3px 0 #000, 0 0 18px rgba(255, 111, 176, 0.55);
   color: #ffd23f;
   letter-spacing: 1px;
 }
@@ -131,6 +131,7 @@ canvas#game {
 
 #start-btn:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 0 4px rgba(255, 111, 176, 0.4);
 }
 
 #start-btn:active {
@@ -145,7 +146,7 @@ canvas#game {
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(179, 16, 107, 0.28);
   border-radius: 999px;
 }
 
@@ -170,7 +171,7 @@ canvas#game {
 
 #mute-btn:hover,
 #leaderboard-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 111, 176, 0.4);
   transform: scale(1.08);
 }
 
